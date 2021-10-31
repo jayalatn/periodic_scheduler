@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
-project(hellotest)
+project(PeriodicTaskScheduler)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
-set(INSTALL_GTEST OFF)
-add_subdirectory(googletest)
+add_subdirectory(src)
 
-add_executable(hellotest test.cpp)
-target_link_libraries(hellotest gtest)
+add_subdirectory(tests)
