@@ -44,7 +44,7 @@ namespace periodic_task_scheduler
 
         std::priority_queue<std::shared_ptr<PeriodicTask>> task_queue_;
         std::mutex task_queue_mutex_;
-        std::condition_variable wait_process_queue;
+        std::condition_variable continue_process_queue;
         std::atomic<bool> running_ = {false};
         std::vector<std::thread> thread_pool_;
     };

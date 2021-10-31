@@ -45,6 +45,9 @@ namespace periodic_task_scheduler
         ///returns underline @Task
         Task* task() const noexcept;
 
+        ///returns if the task shall be executed now
+        bool executeNow() const noexcept;
+
     private:
         bool thread_safe_ = true;
         std::atomic<bool> disabled_{false};

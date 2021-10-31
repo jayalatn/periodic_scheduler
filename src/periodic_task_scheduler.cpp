@@ -74,28 +74,30 @@ void PeriodicTaskScheduler::processTaskQueue()
         std::shared_ptr<PeriodicTask> task = nullptr;
         {
             std::unique_lock<std::mutex> lock(task_queue_mutex_);
-            auto execute_task = !task_queue_.empty();
-            if(!execute_task)
+            if(task_queue_.empty())
             {
-                wait_process_queue.wait(lock);
+                continue_process_queue.wait(lock);
             }
 
-            auto now = std::chrono::steady_clock::now();
-            if(task_queue_.top()->executeAt() <= now)
+            task = task_queue_.top();
+            if(!task->enabled())
             {
-                task = task_queue_.top();
                 task_queue_.pop();
-                if(task->enabled())
-                {
-                    task->updateExecutionTime();
-                    task_queue_.push(task);
-                    lock.unlock();
-                    wait_process_queue.notify_one();
-                }
+                continue;
             }
+
+            if(!task->executeNow())
+            {
+                continue;
+            }
+        
+            task_queue_.pop();
+            task->updateExecutionTime();
+            task_queue_.push(task);
         }
 
-        if(task && task->enabled())
+        continue_process_queue.notify_one();
+        if(task)
         {
             task->execute(); 
         }

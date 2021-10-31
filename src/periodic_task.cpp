@@ -48,6 +48,11 @@ void PeriodicTask::updateExecutionTime() noexcept
     execute_at_ += execution_frq_;
 }
 
+bool PeriodicTask::executeNow() const noexcept
+{
+    return (execute_at_ <= std::chrono::steady_clock::now());
+}
+
 void PeriodicTask::setExecutionAt(const std::chrono::steady_clock::time_point& at) noexcept
 {
     execute_at_ = at;
