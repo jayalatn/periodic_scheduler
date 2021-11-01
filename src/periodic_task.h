@@ -19,37 +19,36 @@ namespace periodic_task_scheduler
         PeriodicTask(const PeriodicTask&) = delete;
     	
         ///set the execution frequency of the task
-        void setExecutionFrq(const std::chrono::microseconds& execution_frq) noexcept;
+        void setExecutionFrq(const std::chrono::microseconds& execution_frq);
 
-        std::chrono::microseconds executionFrq() const noexcept;
+        std::chrono::microseconds executionFrq() const;
 
         ///set the execution time at which task shall be executed
-        void setExecutionAt(const std::chrono::steady_clock::time_point& at) noexcept;
+        void setExecutionAt(const std::chrono::steady_clock::time_point& at);
 
-        const std::chrono::steady_clock::time_point& executeAt() const noexcept;
+        const std::chrono::steady_clock::time_point& executeAt() const;
 
         ///executes actual task, Task::execute() is called, thereby concrete implementation
         void execute();
 
         ///disables executing of this task, disabled tasks shall be removed from @PeriodicTaskScheduler
-        void disable() noexcept;
+        void disable();
 
         ///enables executing of this task
-        void enable() noexcept;
+        void enable();
 
-        bool enabled() noexcept;
+        bool enabled();
 
         ///updates the execution time for the next execution of the task, i.e. execute_at_ += execution_frq_
-        void updateExecutionTime() noexcept;
+        void updateExecutionTime();
 
         ///returns underline @Task
-        Task* task() const noexcept;
+        Task* task() const;
 
         ///returns if the task shall be executed now
-        bool executeNow() const noexcept;
+        bool executeNow() const;
 
     private:
-        bool thread_safe_ = true;
         std::atomic<bool> disabled_{false};
         std::mutex execution_busy_;
         std::chrono::microseconds execution_frq_;

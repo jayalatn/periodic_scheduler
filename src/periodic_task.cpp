@@ -7,12 +7,12 @@ PeriodicTask::PeriodicTask(std::unique_ptr<Task> task):task_(std::move(task))
     execute_at_ = std::chrono::steady_clock::now();
 }
 
-void PeriodicTask::setExecutionFrq(const std::chrono::microseconds& execution_frq) noexcept
+void PeriodicTask::setExecutionFrq(const std::chrono::microseconds& execution_frq) 
 {
     execution_frq_ = execution_frq;
 }
 
-std::chrono::microseconds PeriodicTask::executionFrq() const noexcept
+std::chrono::microseconds PeriodicTask::executionFrq() const 
 {
     return execution_frq_;
 }
@@ -23,42 +23,42 @@ void PeriodicTask::execute()
     task_->execute();
 }
 
-Task* PeriodicTask::task() const  noexcept
+Task* PeriodicTask::task() const  
 {
     return task_.get();
 }
 
-void PeriodicTask::disable() noexcept
+void PeriodicTask::disable() 
 {
     disabled_.store(true);
 }
 
-void PeriodicTask::enable() noexcept
+void PeriodicTask::enable() 
 {
     disabled_.store(false);
 }
 
-bool PeriodicTask::enabled() noexcept
+bool PeriodicTask::enabled() 
 {
     return !disabled_;
 }
 
-void PeriodicTask::updateExecutionTime() noexcept
+void PeriodicTask::updateExecutionTime() 
 {
     execute_at_ += execution_frq_;
 }
 
-bool PeriodicTask::executeNow() const noexcept
+bool PeriodicTask::executeNow() const 
 {
     return (execute_at_ <= std::chrono::steady_clock::now());
 }
 
-void PeriodicTask::setExecutionAt(const std::chrono::steady_clock::time_point& at) noexcept
+void PeriodicTask::setExecutionAt(const std::chrono::steady_clock::time_point& at) 
 {
     execute_at_ = at;
 }
 
-const std::chrono::steady_clock::time_point& PeriodicTask::executeAt() const noexcept
+const std::chrono::steady_clock::time_point& PeriodicTask::executeAt() const 
 {
     return execute_at_;
 }

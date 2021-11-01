@@ -17,9 +17,9 @@ class SwapFileSizeTask: public Task
 public:
     void execute() override;
     
-    const TaskMetric& totalSwapFileSize() const noexcept;
+    const TaskMetric& totalSwapFileSize() const;
 
-    const TaskMetric& curSwapFileUsage() const noexcept;
+    const TaskMetric& curSwapFileUsage() const;
 
 private:
     TaskMetric total_swap_file_size_{"total_swap_file_size"};

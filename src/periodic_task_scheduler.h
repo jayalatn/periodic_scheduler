@@ -15,14 +15,12 @@ namespace periodic_task_scheduler
     class PeriodicTaskScheduler
     {
     public:
-        PeriodicTaskScheduler() = default;
-
+        explicit PeriodicTaskScheduler(size_t thread_pool_size = std::thread::hardware_concurrency());
         ~PeriodicTaskScheduler();
-
         PeriodicTaskScheduler(const PeriodicTaskScheduler&) = delete;
 
         ///add @PeriodicTask to the scheduler
-        void addTask(std::shared_ptr<PeriodicTask> task) noexcept;
+        void addTask(std::shared_ptr<PeriodicTask> task);
         
         ///removes @PeriodicTask from task scheduler, the task is not instantly removed from queue
         void removeTask(std::shared_ptr<PeriodicTask> task);
@@ -42,6 +40,7 @@ namespace periodic_task_scheduler
         ///@start() is called after @stop() or cosiderable duration after tasks are addded
         void recalculateTaskExecutionTimes();
 
+        size_t thread_pool_size_;
         std::priority_queue<std::shared_ptr<PeriodicTask>> task_queue_;
         std::mutex task_queue_mutex_;
         std::condition_variable continue_process_queue;

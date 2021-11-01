@@ -17,12 +17,12 @@ void SwapFileSizeTask::execute()
     cur_swap_file_usage_.addMetric(tm, statex.ullAvailPageFile / MEGA_BYTES);
 }
     
-const TaskMetric& SwapFileSizeTask::totalSwapFileSize() const noexcept
+const TaskMetric& SwapFileSizeTask::totalSwapFileSize() const
 {
     return total_swap_file_size_;
 }
 
-const TaskMetric& SwapFileSizeTask::curSwapFileUsage() const noexcept
+const TaskMetric& SwapFileSizeTask::curSwapFileUsage() const
 {
     return cur_swap_file_usage_;
 }
